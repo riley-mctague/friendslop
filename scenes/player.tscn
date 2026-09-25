@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://ds25c7icm0guj"]
+
+[ext_resource type="Script" uid="uid://c0wxvp643sqv1" path="res://scenes/player.gd" id="1_3vyb7"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kv3c4"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_kv3c4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3vyb7"]
+albedo_color = Color(0.7109737, 0.64782566, 3.85046e-07, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_kv3c4"]
+radius = 0.2
+height = 0.4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wn8x7"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_3vyb7"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[node name="Player" type="CharacterBody3D" unique_id=656755906]
+script = ExtResource("1_3vyb7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1817774040]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_kv3c4")
+
+[node name="Body" type="MeshInstance3D" parent="." unique_id=1505814953]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_kv3c4")
+surface_material_override/0 = SubResource("StandardMaterial3D_3vyb7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Body" unique_id=143787306]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, 0.5, -0.3)
+mesh = SubResource("SphereMesh_kv3c4")
+surface_material_override/0 = SubResource("StandardMaterial3D_wn8x7")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Body" unique_id=885520834]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15, 0.5, -0.3)
+mesh = SubResource("SphereMesh_kv3c4")
+surface_material_override/0 = SubResource("StandardMaterial3D_wn8x7")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1198227995]
+replication_config = SubResource("SceneReplicationConfig_3vyb7")
+
+[node name="Camera" type="Camera3D" parent="." unique_id=174492752]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6228783, 0)
+near = 0.3
