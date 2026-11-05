@@ -1,6 +1,7 @@
 extends CharacterBody3D
 
 @onready var camera: Camera3D = $Camera
+@onready var animation_player: AnimationPlayer = $playermodel/AnimationPlayer
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
@@ -18,6 +19,7 @@ func _ready() -> void:
 	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	camera.current = true
+	animate("idle")
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -50,9 +52,11 @@ func _physics_process(delta: float) -> void:
 	if direction:
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
+		animate("walk")
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
+		animate("idle")
 
 func _process(delta: float) -> void:
 	if not is_multiplayer_authority():
@@ -64,6 +68,12 @@ func _process(delta: float) -> void:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		elif Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+			
+func animate(animation: String):
+	if animation == "idle":
+		animation_player.play("idle")
+	if animation == "walk":
+		animation_player.play("walk")
 
 
 

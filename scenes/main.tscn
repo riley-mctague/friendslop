@@ -1,22 +1,23 @@
 [gd_scene format=3 uid="uid://crh7fdht1dheh"]
 
 [ext_resource type="Script" uid="uid://befgvieons8eh" path="res://scripts/main.gd" id="1_o5qli"]
-[ext_resource type="Texture2D" uid="uid://dt2vkvewg1kru" path="res://assets/textures/texture_07.png" id="2_0wfyh"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0wfyh"]
-sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
-ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
-
-[sub_resource type="Sky" id="Sky_sugp2"]
-sky_material = SubResource("ProceduralSkyMaterial_0wfyh")
 
 [sub_resource type="Environment" id="Environment_jyhfs"]
-background_mode = 2
-sky = SubResource("Sky_sugp2")
+background_mode = 1
+background_color = Color(0.39916146, 0.0018176096, 0.8710567, 1)
+background_energy_multiplier = 0.5
+ambient_light_source = 2
+ambient_light_color = Color(1.0588765e-06, 0.7279849, 0.63681006, 1)
+ambient_light_energy = 0.5
+glow_enabled = true
+fog_enabled = true
+fog_light_color = Color(6.3532593e-06, 0.62101495, 0.6871951, 1)
+fog_density = 0.005
+fog_sky_affect = 0.01
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sugp2"]
-albedo_texture = ExtResource("2_0wfyh")
-uv1_triplanar = true
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0wfyh"]
+albedo_color = Color(0.8835402, 2.05037e-05, 0.60654396, 1)
+metallic_specular = 0.0
 
 [node name="Main" type="Node3D" unique_id=2037401107]
 script = ExtResource("1_o5qli")
@@ -25,8 +26,10 @@ script = ExtResource("1_o5qli")
 environment = SubResource("Environment_jyhfs")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=147248862]
-transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 4.9293585, 0)
+light_color = Color(0.85115933, 0.9468067, 0.91879773, 1)
 shadow_enabled = true
+shadow_opacity = 0.75
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=779696862]
 
@@ -45,9 +48,9 @@ spawn_path = NodePath("../..")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Playground" unique_id=1468025217]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-material_override = SubResource("StandardMaterial3D_sugp2")
+material_override = SubResource("StandardMaterial3D_0wfyh")
 use_collision = true
-size = Vector3(50, 1, 50)
+size = Vector3(500, 1, 500)
 
 [connection signal="pressed" from="CanvasLayer/Host" to="." method="_on_host_pressed"]
 [connection signal="spawned" from="SpawnPoint/MultiplayerSpawner" to="." method="_on_multiplayer_spawner_spawned"]

@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://dykx1h48ua7dm"]
+
+[ext_resource type="PackedScene" uid="uid://yuq2yopu3kk6" path="res://assets/models/player.glb" id="1_7rejn"]
+
+[node name="player" unique_id=976434067 instance=ExtResource("1_7rejn")]
+
+[node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(1903657433) index="0" unique_id=716492294]
+bones/1/rotation = Quaternion(-3.5337368e-07, -1.9625018e-08, -0.8572802, 0.51485014)
+bones/2/position = Vector3(0.24296288, 0.087823935, 1.0396467e-07)
+bones/2/rotation = Quaternion(5.1085135e-07, -1.4949116e-07, 0.99994665, -0.010331015)
+bones/3/rotation = Quaternion(-3.5337368e-07, 1.9625018e-08, 0.8572802, 0.51485014)
+bones/4/position = Vector3(-0.24296288, 0.087823935, 1.0396467e-07)
+bones/4/rotation = Quaternion(-5.1085135e-07, -1.4949116e-07, 0.99994665, 0.010331015)
