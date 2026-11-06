@@ -2,6 +2,8 @@ extends CharacterBody3D
 
 @onready var camera: Camera3D = $Camera
 @onready var animation_player: AnimationPlayer = $playermodel/AnimationPlayer
+@onready var mesh: MeshInstance3D = $playermodel/Armature/Skeleton3D/Mesh
+@export var chosen_colour:= Color(1, 0, 0, 1)
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
@@ -20,6 +22,7 @@ func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	camera.current = true
 	animate("idle")
+	mesh.get_active_material(0).set_albedo(Color(chosen_colour)) #OMG IT WORKS
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -74,6 +77,16 @@ func animate(animation: String):
 		animation_player.play("idle")
 	if animation == "walk":
 		animation_player.play("walk")
+
+
+func _on_color_picker_color_changed(colour: Color) -> void:
+	change_colour(colour)
+
+
+func change_colour(colour: Color):
+	chosen_colour = colour
+	mesh.get_active_material(0).set_albedo(Color(chosen_colour))
+
 
 
 
