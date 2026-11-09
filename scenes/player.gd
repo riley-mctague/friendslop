@@ -8,8 +8,9 @@ extends CharacterBody3D
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 
-@export var chosen_colour : Color # Does not work. Only most recently joined player can change the colour. 
+var chosen_colour : Color # Does not work. Only most recently joined player can change the colour. 
 @export var sensitivity := 0.005
+@export var texture_resource = load("res://scenes/player.tscn::ArrayMesh_8vlqm") #let's try this...
 
 
 func _enter_tree() -> void:
@@ -24,7 +25,7 @@ func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	camera.current = true
 	animate("idle")
-	chosen_colour = mesh.get_active_material(0).get_albedo() # will this fix it? who knows...
+	chosen_colour = mesh.get_active_material(0).get_albedo() # will this fix it? who knows...nope
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -96,3 +97,4 @@ func change_colour(colour: Color):
 		return
 	mesh.get_active_material(0).set_albedo(Color(colour))
 	chosen_colour = mesh.get_active_material(0).get_albedo()
+	ResourceSaver.save(texture_resource)
