@@ -4,14 +4,11 @@ extends CharacterBody3D
 @onready var animation_player: AnimationPlayer = $playermodel/AnimationPlayer
 @onready var mesh: MeshInstance3D = $playermodel/Armature/Skeleton3D/Mesh
 
-
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 
-var chosen_colour : Color # Does not work. Only most recently joined player can change the colour. 
 @export var sensitivity := 0.005
-@export var texture_resource = load("res://scenes/player.tscn::ArrayMesh_8vlqm") #let's try this...
-
+# Switched to RPC functionality for colour change. 
 
 func _enter_tree() -> void:
 	# Set authority over the correct player
@@ -25,7 +22,7 @@ func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	camera.current = true
 	animate("idle")
-	chosen_colour = mesh.get_active_material(0).get_albedo() # will this fix it? who knows...nope
+	#chosen_colour = mesh.get_active_material(0).get_albedo() # will this fix it? who knows...nope
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -36,7 +33,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		self.rotate_y(-event.relative.x * sensitivity)
 		camera.rotate_x(-event.relative.y * sensitivity)
 		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-85), deg_to_rad(85))
-
 
 
 func _physics_process(delta: float) -> void:
@@ -66,6 +62,7 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
+
 func _process(delta: float) -> void:
 	if not is_multiplayer_authority():
 		return
@@ -89,12 +86,11 @@ func animate(animation: String):
 func _on_color_picker_color_changed(colour: Color) -> void:
 	if not is_multiplayer_authority():
 		return
-	change_colour(colour)
+	change_colour.rpc(colour)
 
 
+@rpc("call_local") # call rpc on the authority (the one changing colour)
 func change_colour(colour: Color):
 	if not is_multiplayer_authority():
 		return
 	mesh.get_active_material(0).set_albedo(Color(colour))
-	chosen_colour = mesh.get_active_material(0).get_albedo()
-	ResourceSaver.save(texture_resource)
