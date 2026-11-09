@@ -3,11 +3,11 @@ extends CharacterBody3D
 @onready var camera: Camera3D = $Camera
 @onready var animation_player: AnimationPlayer = $playermodel/AnimationPlayer
 @onready var mesh: MeshInstance3D = $playermodel/Armature/Skeleton3D/Mesh
-@export var chosen_colour:= Color(1, 1, 1, 1)
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 
+@export var chosen_colour:= Color(1, 1, 1, 1)
 @export var sensitivity := 0.005
 
 
@@ -92,5 +92,5 @@ func _on_color_picker_color_changed(colour: Color) -> void:
 func change_colour(colour: Color):
 	if not is_multiplayer_authority():
 		return
-	chosen_colour = colour
-	mesh.get_active_material(0).set_albedo(Color(chosen_colour))
+	mesh.get_active_material(0).set_albedo(Color(colour))
+	chosen_colour = mesh.get_active_material(0).get_albedo()

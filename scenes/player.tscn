@@ -17,6 +17,7 @@ albedo_color = Color(0, 0, 0, 1)
 roughness = 0.5
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_8vlqm"]
+resource_local_to_scene = true
 resource_name = "player_Sphere_006"
 _surfaces = [{
 "aabb": AABB(-0.95, 0, -1, 1.9, 2.3500001, 1.5),
