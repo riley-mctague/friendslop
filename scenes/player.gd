@@ -61,6 +61,7 @@ func _physics_process(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 		animate("idle")
 
+	move_and_slide()
 
 func _process(delta: float) -> void:
 	if not is_multiplayer_authority():
@@ -93,8 +94,3 @@ func change_colour(colour: Color):
 		return
 	chosen_colour = colour
 	mesh.get_active_material(0).set_albedo(Color(chosen_colour))
-
-
-
-
-	move_and_slide()
