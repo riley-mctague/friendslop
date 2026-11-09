@@ -89,8 +89,9 @@ func _on_color_picker_color_changed(colour: Color) -> void:
 	change_colour.rpc(colour)
 
 
-@rpc("call_local") # call rpc on the authority (the one changing colour)
+@rpc("authority", "call_local", "reliable") 
 func change_colour(colour: Color):
 	if not is_multiplayer_authority():
 		return
 	mesh.get_active_material(0).set_albedo(Color(colour))
+	print("I changed colour!")

@@ -5,6 +5,7 @@
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kv3c4"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i1s6v"]
+resource_local_to_scene = true
 resource_name = "Material.001"
 cull_mode = 2
 albedo_color = Color(0.9063318, 0.9063318, 0.9063318, 1)
