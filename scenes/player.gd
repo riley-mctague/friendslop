@@ -61,18 +61,21 @@ func _physics_process(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 		animate("idle")
 
+
 func _process(delta: float) -> void:
 	if not is_multiplayer_authority():
 		return
-	
 	# Use escape to capture & release the mouse. 
 	if Input.is_action_just_pressed("escape"):
 		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		elif Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-			
+
+
 func animate(animation: String):
+	if not is_multiplayer_authority():
+		return
 	if animation == "idle":
 		animation_player.play("idle")
 	if animation == "walk":
@@ -80,10 +83,14 @@ func animate(animation: String):
 
 
 func _on_color_picker_color_changed(colour: Color) -> void:
+	if not is_multiplayer_authority():
+		return
 	change_colour(colour)
 
 
 func change_colour(colour: Color):
+	if not is_multiplayer_authority():
+		return
 	chosen_colour = colour
 	mesh.get_active_material(0).set_albedo(Color(chosen_colour))
 
