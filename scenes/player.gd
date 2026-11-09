@@ -3,7 +3,7 @@ extends CharacterBody3D
 @onready var camera: Camera3D = $Camera
 @onready var animation_player: AnimationPlayer = $playermodel/AnimationPlayer
 @onready var mesh: MeshInstance3D = $playermodel/Armature/Skeleton3D/Mesh
-@export var chosen_colour:= Color(1, 0, 0, 1)
+@export var chosen_colour:= Color(1, 1, 1, 1)
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
@@ -15,6 +15,7 @@ func _enter_tree() -> void:
 	# Set authority over the correct player
 	set_multiplayer_authority(name.to_int())
 
+
 func _ready() -> void:
 	if not is_multiplayer_authority():
 		return
@@ -22,7 +23,6 @@ func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	camera.current = true
 	animate("idle")
-	mesh.get_active_material(0).set_albedo(Color(chosen_colour)) #OMG IT WORKS
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -78,9 +78,9 @@ func animate(animation: String):
 	if not is_multiplayer_authority():
 		return
 	if animation == "idle":
-		animation_player.play("idle")
+		self.animation_player.play("idle")
 	if animation == "walk":
-		animation_player.play("walk")
+		self.animation_player.play("walk")
 
 
 func _on_color_picker_color_changed(colour: Color) -> void:
