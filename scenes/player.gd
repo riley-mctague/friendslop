@@ -4,10 +4,11 @@ extends CharacterBody3D
 @onready var animation_player: AnimationPlayer = $playermodel/AnimationPlayer
 @onready var mesh: MeshInstance3D = $playermodel/Armature/Skeleton3D/Mesh
 
+
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 
-@export var chosen_colour:= Color(1, 1, 1, 1)
+@export var chosen_colour : Color # Does not work. Only most recently joined player can change the colour. 
 @export var sensitivity := 0.005
 
 
@@ -23,6 +24,7 @@ func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	camera.current = true
 	animate("idle")
+	chosen_colour = mesh.get_active_material(0).get_albedo() # will this fix it? who knows...
 
 
 func _unhandled_input(event: InputEvent) -> void:
