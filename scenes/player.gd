@@ -22,7 +22,7 @@ func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	camera.current = true
 	animate("idle")
-	#chosen_colour = mesh.get_active_material(0).get_albedo() # will this fix it? who knows...nope
+	change_colour.rpc(Color(1,0,0,1)) # maybe forcing the material to update will fix sync issues?
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -89,7 +89,6 @@ func _on_color_picker_color_changed(colour: Color) -> void:
 	change_colour.rpc(colour)
 
 
-@rpc("authority", "call_local", "reliable") 
+@rpc("call_local") 
 func change_colour(colour: Color):
 	mesh.get_active_material(0).set_albedo(Color(colour))
-	print("I changed colour!")
