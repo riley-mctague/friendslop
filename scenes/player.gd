@@ -89,6 +89,6 @@ func _on_color_picker_color_changed(colour: Color) -> void:
 	change_colour.rpc(colour)
 
 
-@rpc("call_local") 
+@rpc("authority", "call_local", "reliable") 
 func change_colour(colour: Color):
 	mesh.get_active_material(0).set_albedo(Color(colour))

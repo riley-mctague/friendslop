@@ -1,25 +1,28 @@
 [gd_scene format=3 uid="uid://crh7fdht1dheh"]
 
 [ext_resource type="Script" uid="uid://befgvieons8eh" path="res://scripts/main.gd" id="1_o5qli"]
-[ext_resource type="Texture2D" uid="uid://dt2vkvewg1kru" path="res://assets/textures/texture_07.png" id="2_0wfyh"]
+[ext_resource type="PackedScene" uid="uid://7bnnhlaw22pl" path="res://assets/models/groundplane.glb" id="2_0wfyh"]
+[ext_resource type="Texture2D" uid="uid://cnniqfmaj1tx5" path="res://assets/textures/skybox.jpg" id="2_sugp2"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_tbgi4"]
+panorama = ExtResource("2_sugp2")
+
+[sub_resource type="Sky" id="Sky_3qkei"]
+sky_material = SubResource("PanoramaSkyMaterial_tbgi4")
 
 [sub_resource type="Environment" id="Environment_jyhfs"]
-background_mode = 1
+background_mode = 2
 background_color = Color(0.39916146, 0.0018176096, 0.8710567, 1)
 background_energy_multiplier = 0.5
+sky = SubResource("Sky_3qkei")
 ambient_light_source = 2
-ambient_light_color = Color(1.0588765e-06, 0.7279849, 0.63681006, 1)
-ambient_light_energy = 0.5
-glow_enabled = true
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.25
 fog_enabled = true
-fog_light_color = Color(6.3532593e-06, 0.62101495, 0.6871951, 1)
+fog_light_color = Color(1.6845763e-07, 0.43540314, 0.41228795, 1)
 fog_density = 0.005
 fog_sky_affect = 0.01
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sugp2"]
-albedo_color = Color(1, 0.23928231, 0.7075873, 1)
-albedo_texture = ExtResource("2_0wfyh")
-uv1_triplanar = true
+fog_height_density = 0.25
 
 [node name="Main" type="Node3D" unique_id=2037401107]
 script = ExtResource("1_o5qli")
@@ -48,11 +51,7 @@ spawn_path = NodePath("../..")
 
 [node name="Playground" type="Node3D" parent="." unique_id=587530051]
 
-[node name="CSGBox3D" type="CSGBox3D" parent="Playground" unique_id=1468025217]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6875, 0)
-use_collision = true
-size = Vector3(500, 1, 500)
-material = SubResource("StandardMaterial3D_sugp2")
+[node name="groundplane" parent="Playground" unique_id=1016691539 instance=ExtResource("2_0wfyh")]
 
 [connection signal="pressed" from="CanvasLayer/Host" to="." method="_on_host_pressed"]
 [connection signal="spawned" from="SpawnPoint/MultiplayerSpawner" to="." method="_on_multiplayer_spawner_spawned"]
