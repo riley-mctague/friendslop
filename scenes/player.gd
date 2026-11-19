@@ -8,7 +8,17 @@ const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 
 @export var sensitivity := 0.005
-# Switched to RPC functionality for colour change. 
+
+# Keeps track of colour. should be synced between clients. 
+# Tankes Ethan
+@export var material_color : Color:
+	get:
+		return material_color
+	set(value): # automatically changes material when set
+		mesh.get_active_material(0).set_albedo(value)
+		material_color = value
+
+
 
 func _enter_tree() -> void:
 	# Set authority over the correct player
@@ -22,7 +32,8 @@ func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	camera.current = true
 	animate("idle")
-	change_colour.rpc(Color(1,0,0,1)) # maybe forcing the material to update will fix sync issues?
+	
+	#change_colour.rpc(Color(1,0,0,1)) # maybe forcing the material to update will fix sync issues?
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -86,9 +97,11 @@ func animate(animation: String):
 func _on_color_picker_color_changed(colour: Color) -> void:
 	if not is_multiplayer_authority():
 		return
-	change_colour.rpc(colour)
+	#change_colour.rpc(colour)
+	material_color = colour
 
 
-@rpc("authority", "call_local", "reliable") 
-func change_colour(colour: Color):
-	mesh.get_active_material(0).set_albedo(Color(colour))
+#@rpc("authority", "call_local", "reliable") 
+#func change_colour(colour: Color):
+#	mesh.get_active_material(0).set_albedo(Color(colour))
+#	material_color = colour
